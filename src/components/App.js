@@ -21,7 +21,7 @@ export class App extends Component {
     filter: ''
   }
   componentDidMount () {
-    const contacts = storage.load(App.PHONE_BOOK_KEY);
+    const contacts = storage.load(App.PHONE_BOOK_KEY) ?? [];
     this.setState({ contacts });
   }
   componentDidUpdate () {

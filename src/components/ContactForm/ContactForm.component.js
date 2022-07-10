@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Form, Wrapper, AddContact, Label, Input } from './ContactForm.styled';
 import { nanoid } from "nanoid";
 import { storage } from "services";
-// import { toast } from 'react-toastify';
 
 class ContactForm extends Component {
     static propTypes = {
@@ -16,7 +15,7 @@ class ContactForm extends Component {
     }
     componentDidMount () {
         const contact = storage.load(ContactForm.CONTACT_FORM_KEY);
-        this.setState(contact);
+        contact && this.setState(contact);
     }
     componentDidUpdate () {
         storage.save(ContactForm.CONTACT_FORM_KEY, this.state);
@@ -34,13 +33,6 @@ class ContactForm extends Component {
         const { addContact } = this.props;
         const id = nanoid();
         const { name, number } = this.state;
-        
-        // обрабка порожніх полів
-        // if (!name || !number) {
-        //     return toast.warn('All fields must be filled in', {
-        //         autoClose: 3000
-        //     })
-        // }
 
         const wasAdded = addContact({ id, name, number });
         
@@ -88,10 +80,7 @@ class ContactForm extends Component {
                         onChange={this.handleInputTypedValue}
                     />
                 </Wrapper>
-                <AddContact
-                    type="submit"
-                    onClick={this.handleFormSubmit}
-                >
+                <AddContact type="submit">
                     Add contact
                 </AddContact>
             </Form>
