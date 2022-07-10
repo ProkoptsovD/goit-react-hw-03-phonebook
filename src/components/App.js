@@ -11,11 +11,23 @@ import Filter from './Filter';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './App.module.css';
 import Empty from './Empty';
+import { storage } from 'services';
 
 export class App extends Component {
+  static PHONE_BOOK_KEY = 'phonebook';
+
   state = {
     contacts: [],
     filter: ''
+  }
+  componentDidMount () {
+    const contacts = storage.load(App.PHONE_BOOK_KEY);
+    this.setState({ contacts });
+  }
+  componentDidUpdate () {
+    const { contacts } = this.state;
+
+    storage.save(App.PHONE_BOOK_KEY, contacts);
   }
   addContact = (newContact) => {
     if (!this.isContactUnique(newContact)) {

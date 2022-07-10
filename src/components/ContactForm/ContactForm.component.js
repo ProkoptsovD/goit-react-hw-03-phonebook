@@ -2,16 +2,24 @@ import { Component } from "react";
 import PropTypes from 'prop-types';
 import { Form, Wrapper, AddContact, Label, Input } from './ContactForm.styled';
 import { nanoid } from "nanoid";
+import { storage } from "services";
 // import { toast } from 'react-toastify';
 
 class ContactForm extends Component {
     static propTypes = {
         addContact: PropTypes.func.isRequired,
     }
-
+    static CONTACT_FORM_KEY = 'contact-form';
     state = {
         name: '',
         number: ''
+    }
+    componentDidMount () {
+        const contact = storage.load(ContactForm.CONTACT_FORM_KEY);
+        this.setState(contact);
+    }
+    componentDidUpdate () {
+        storage.save(ContactForm.CONTACT_FORM_KEY, this.state);
     }
     handleInputTypedValue = (e) => {
         const { name, value } = e.target;
