@@ -5,21 +5,19 @@ import { ListItem, ListOfContacts } from './ContactList.styled';
 const ContactList = ({ contactList, deleteContact }) => {
     return (
         <ListOfContacts>
-            {
-                contactList.map(({ id, name, number }) => (
-                    <ListItem
-                        key={id}
-                    >
-                        <Contact
-                            name={name}
-                            number={number}
-                            deleteContact={() => deleteContact(id)}
-                        />
-                    </ListItem>
-                ))
-            }
+            {contactList.map(({ id, name, number }) => (
+                <ListItem
+                    key={id}
+                    onClick={() => deleteContact(id)}
+                >
+                    <Contact
+                        name={name}
+                        number={number}
+                    />
+                </ListItem>
+            ))}
         </ListOfContacts>
-    )
+    );
 }
 
 ContactList.propTypes = {
